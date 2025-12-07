@@ -1,4 +1,4 @@
-package org.grimjo.macrocore.api;
+package org.grimjo.macrocore.infrastructure.api;
 
 import lombok.Builder;
 import org.springframework.web.bind.annotation.GetMapping;
