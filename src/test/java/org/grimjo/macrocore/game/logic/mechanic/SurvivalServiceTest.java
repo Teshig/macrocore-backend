@@ -29,7 +29,7 @@ class SurvivalServiceTest {
         .satisfies(
             p -> {
               assertThat(p.getId()).isEqualTo(1L);
-              assertThat(p.getHunger()).isEqualTo(0); // Стал сыт
+              assertThat(p.getHunger()).isZero();
             });
   }
 
@@ -44,7 +44,7 @@ class SurvivalServiceTest {
     var result = service.processDailySurvival(population, foodStock);
 
     // THEN
-    assertThat(result.getRemainingFood()).isEqualTo(0L);
+    assertThat(result.getRemainingFood()).isZero();
     assertThat(result.getSurvivors())
         .hasSize(1)
         .first()
