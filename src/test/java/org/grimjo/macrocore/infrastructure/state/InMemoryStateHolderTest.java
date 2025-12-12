@@ -26,7 +26,7 @@ class InMemoryStateHolderTest {
 
     // THEN
     assertThat(initialState).isNotNull();
-    assertThat(initialState.getTick()).isEqualTo(0L);
+    assertThat(initialState.getTick()).isZero();
     assertThat(initialState.getSettlements()).hasSize(1);
     assertThat(initialState.getSettlements().get(0L).getSettlers()).hasSize(3);
   }

@@ -1,6 +1,7 @@
 package org.grimjo.macrocore;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,6 @@ class AppTest {
 
   @Test
   void main() {
-    App.main(new String[] {});
+    assertDoesNotThrow(() -> App.main(new String[] {}));
   }
 }
