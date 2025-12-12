@@ -37,6 +37,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           ./mvnw -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-            -Dsonar.projectKey=teshig \
-            -Dsonar.organization=Teshig \
+            -Dsonar.projectKey=Teshig_macrocore-backend \
+            -Dsonar.organization=teshig \
             -Dsonar.host.url=https://sonarcloud.io
