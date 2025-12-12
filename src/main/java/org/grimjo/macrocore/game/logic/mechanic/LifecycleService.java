@@ -1,0 +1,28 @@
+package org.grimjo.macrocore.game.logic.mechanic;
+
+import java.util.ArrayList;
+import java.util.List;
+import lombok.Builder;
+import lombok.RequiredArgsConstructor;
+import org.grimjo.macrocore.game.model.actor.NpcBase;
+import org.grimjo.macrocore.game.model.item.Corpse;
+
+@Builder
+@RequiredArgsConstructor
+public class LifecycleService {
+
+  public LifecycleServiceResult processLifecycle(List<NpcBase> population) {
+    List<NpcBase> survivors = new ArrayList<>();
+    List<Corpse> newCorpses = new ArrayList<>();
+
+    for (NpcBase npc : population) {
+      if (npc.isDead()) {
+        newCorpses.add(Corpse.from(npc));
+      } else {
+        survivors.add(npc);
+      }
+    }
+
+    return LifecycleServiceResult.builder().survivors(survivors).corpses(newCorpses).build();
+  }
+}

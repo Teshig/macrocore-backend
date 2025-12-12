@@ -1,12 +1,14 @@
 package org.grimjo.macrocore.infrastructure.state;
 
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.grimjo.macrocore.game.engine.GameEngine;
-import org.grimjo.macrocore.game.model.WorldState;
+import org.grimjo.macrocore.game.model.global.WorldState;
 import org.springframework.scheduling.annotation.Scheduled;
 
 @Slf4j
+@Builder
 @RequiredArgsConstructor
 public class SimulationTicker {
   private final GameEngine gameEngine;
@@ -27,7 +29,7 @@ public class SimulationTicker {
       log.debug(
           "Tick {} processed. Settlements: {}",
           nextWorld.getTick(),
-          nextWorld.getSettlements().size());
+          nextWorld.getSettlements());
     } catch (Exception ex) {
       log.error("Error during game tick processing", ex);
     }
