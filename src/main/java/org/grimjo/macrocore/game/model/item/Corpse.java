@@ -7,8 +7,8 @@ import org.grimjo.macrocore.game.model.actor.NpcBase;
 @Value
 @Builder
 public class Corpse {
-  Long id;
-  Long originalNpcId;
+  long id;
+  long originalNpcId;
   String name;
 
   public static Corpse from(NpcBase npc) {

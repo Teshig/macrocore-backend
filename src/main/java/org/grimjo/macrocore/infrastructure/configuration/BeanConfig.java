@@ -15,16 +15,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class BeanConfiguration {
+public class BeanConfig {
 
   @Bean
   public SurvivalPolicy survivalPolicy() {
-    return new SurvivalPolicy();
+    return SurvivalPolicy.builder().build();
   }
 
   @Bean
-  public TownAssemblyService townAssemblyService(SurvivalPolicy survivalPolicy) {
-    return new TownAssemblyService();
+  public TownAssemblyService townAssemblyService() {
+    return TownAssemblyService.builder().build();
   }
 
   @Bean
@@ -34,32 +34,36 @@ public class BeanConfiguration {
       LifecycleService lifecycleService,
       SurvivalPolicy survivalPolicy) {
     Map<Long, List<Policy>> registry = Map.of(0L, List.of(survivalPolicy));
-    return new SettlementStateProcessor(
-        assemblyService, survivalService, lifecycleService, registry);
+    return SettlementStateProcessor.builder()
+        .assemblyService(assemblyService)
+        .survivalService(survivalService)
+        .lifecycleService(lifecycleService)
+        .settlementPoliciesConfig(registry)
+        .build();
   }
 
   @Bean
   public GameEngine gameEngine(SettlementStateProcessor processor) {
-    return new GameEngine(processor);
+    return GameEngine.builder().settlementProcessor(processor).build();
   }
 
   @Bean
   public InMemoryStateHolder inMemoryStateHolder() {
-    return new InMemoryStateHolder();
+    return InMemoryStateHolder.builder().build();
   }
 
   @Bean
   public SimulationTicker simulationTicker(GameEngine gameEngine, InMemoryStateHolder stateHolder) {
-    return new SimulationTicker(gameEngine, stateHolder);
+    return SimulationTicker.builder().gameEngine(gameEngine).stateHolder(stateHolder).build();
   }
 
   @Bean
   public SurvivalService survivalService() {
-    return new SurvivalService();
+    return SurvivalService.builder().build();
   }
 
   @Bean
   public LifecycleService lifecycleService() {
-    return new LifecycleService();
+    return LifecycleService.builder().build();
   }
 }

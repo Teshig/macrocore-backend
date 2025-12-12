@@ -9,7 +9,7 @@ import org.grimjo.macrocore.game.model.settlement.Settlement;
 @Value
 @Builder(toBuilder = true)
 public class WorldState {
-  @Builder.Default long tick = 0;
+  long tick;
 
   @Builder.Default Map<Long, Settlement> settlements = Collections.emptyMap();
 

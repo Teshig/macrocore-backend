@@ -5,16 +5,13 @@ import org.grimjo.macrocore.game.model.politic.Decree;
 import org.grimjo.macrocore.game.model.actor.NpcBase;
 
 public sealed interface Settlement permits SmallSettlement {
-  Long getSettlementId();
+  long getId();
 
   long getFoodStock();
-  List<NpcBase> getSettlers();
 
   long getFoodRequirements();
 
+  List<NpcBase> getSettlers();
+
   List<Decree> getDecrees();
-
-  Settlement updateDecrees(List<Decree> newDecrees);
-
-  SmallSettlement updatePopulation(List<NpcBase> settlers);
 }

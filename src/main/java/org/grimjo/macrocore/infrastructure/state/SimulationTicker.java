@@ -1,5 +1,6 @@
 package org.grimjo.macrocore.infrastructure.state;
 
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.grimjo.macrocore.game.engine.GameEngine;
@@ -7,6 +8,7 @@ import org.grimjo.macrocore.game.model.global.WorldState;
 import org.springframework.scheduling.annotation.Scheduled;
 
 @Slf4j
+@Builder
 @RequiredArgsConstructor
 public class SimulationTicker {
   private final GameEngine gameEngine;

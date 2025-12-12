@@ -2,10 +2,12 @@ package org.grimjo.macrocore.game.logic.mechanic;
 
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.grimjo.macrocore.game.model.actor.NpcBase;
 import org.grimjo.macrocore.game.model.item.Corpse;
 
+@Builder
 @RequiredArgsConstructor
 public class LifecycleService {
 

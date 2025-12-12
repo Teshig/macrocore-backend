@@ -3,6 +3,7 @@ package org.grimjo.macrocore.game.engine;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.grimjo.macrocore.game.processor.SettlementStateProcessor;
@@ -10,6 +11,7 @@ import org.grimjo.macrocore.game.model.global.WorldState;
 import org.grimjo.macrocore.game.model.settlement.Settlement;
 
 @Slf4j
+@Builder
 @RequiredArgsConstructor
 public class GameEngine {
   private final SettlementStateProcessor settlementProcessor;
@@ -21,7 +23,7 @@ public class GameEngine {
         .parallelStream()
         .map(settlementProcessor::process)
         .collect(Collectors.toMap(
-            Settlement::getSettlementId,
+            Settlement::getId,
             Function.identity()
         ));
 

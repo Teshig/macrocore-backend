@@ -8,7 +8,7 @@ import lombok.Value;
 public class NpcBase {
   public static final long DAILY_CONSUMPTION = 1L;
 
-  Long id;
+  long id;
   String name;
   String description;
   int health;

@@ -11,8 +11,7 @@ import org.grimjo.macrocore.game.model.politic.Policy;
 @RequiredArgsConstructor
 public class TownAssemblyService {
 
-  public List<Decree> holdMeeting(
-      SettlementProcessingContext context, List<Policy> policies) {
+  public List<Decree> holdMeeting(SettlementProcessingContext context, List<Policy> policies) {
     return policies.stream().flatMap(policy -> policy.evaluate(context).stream()).toList();
   }
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.IntStream;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.grimjo.macrocore.game.model.actor.NpcBase;
@@ -12,8 +14,12 @@ import org.grimjo.macrocore.game.model.settlement.SmallSettlement;
 import org.grimjo.macrocore.game.model.global.WorldState;
 
 @Slf4j
+@Builder
+@AllArgsConstructor
 @RequiredArgsConstructor
 public class InMemoryStateHolder {
+
+  @Builder.Default
   AtomicReference<WorldState> currentState = new AtomicReference<>();
 
   @PostConstruct
@@ -31,7 +37,7 @@ public class InMemoryStateHolder {
             .settlements(
                 Map.of(
                     0L,
-                    SmallSettlement.builder().settlementId(0L).settlers(initialPopulation).build()))
+                    SmallSettlement.builder().id(0L).settlers(initialPopulation).build()))
             .build();
     currentState.set(initialState);
   }
@@ -44,3 +50,4 @@ public class InMemoryStateHolder {
     currentState.set(newState);
   }
 }
+

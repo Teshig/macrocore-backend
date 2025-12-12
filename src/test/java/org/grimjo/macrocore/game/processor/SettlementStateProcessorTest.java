@@ -37,7 +37,7 @@ class SettlementStateProcessorTest {
   void shouldProcessSmallSettlementPipeline() {
     // GIVEN
     var settlement = SmallSettlement.builder()
-        .settlementId(1L)
+        .id(1L)
         .foodStock(100L)
         .build();
 

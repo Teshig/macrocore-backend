@@ -2,6 +2,7 @@ package org.grimjo.macrocore.game.processor;
 
 import java.util.List;
 import java.util.Map;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.grimjo.macrocore.game.logic.mechanic.LifecycleService;
 import org.grimjo.macrocore.game.logic.mechanic.SurvivalService;
@@ -10,6 +11,7 @@ import org.grimjo.macrocore.game.model.politic.Policy;
 import org.grimjo.macrocore.game.model.settlement.Settlement;
 import org.grimjo.macrocore.game.model.settlement.SmallSettlement;
 
+@Builder
 @RequiredArgsConstructor
 public class SettlementStateProcessor {
   private final TownAssemblyService assemblyService;
@@ -36,7 +38,7 @@ public class SettlementStateProcessor {
             .population(small.getSettlers())
             .decrees(small.getDecrees())
             .build();
-    var policies = settlementPoliciesConfig.getOrDefault(small.getSettlementId(), List.of());
+    var policies = settlementPoliciesConfig.getOrDefault(small.getId(), List.of());
     var decrees = assemblyService.holdMeeting(context, policies);
 
     return small.toBuilder()
