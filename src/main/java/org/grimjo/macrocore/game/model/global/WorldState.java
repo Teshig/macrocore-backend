@@ -1,9 +1,10 @@
-package org.grimjo.macrocore.game.model;
+package org.grimjo.macrocore.game.model.global;
 
 import java.util.Collections;
 import java.util.Map;
 import lombok.Builder;
 import lombok.Value;
+import org.grimjo.macrocore.game.model.settlement.Settlement;
 
 @Value
 @Builder(toBuilder = true)

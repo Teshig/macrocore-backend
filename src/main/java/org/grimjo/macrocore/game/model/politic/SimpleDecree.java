@@ -1,4 +1,4 @@
-package org.grimjo.macrocore.game.model;
+package org.grimjo.macrocore.game.model.politic;
 
 import lombok.Builder;
 import lombok.Value;
