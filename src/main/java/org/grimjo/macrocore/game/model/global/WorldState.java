@@ -12,11 +12,4 @@ public class WorldState {
   long tick;
 
   @Builder.Default Map<Long, Settlement> settlements = Collections.emptyMap();
-
-  public static WorldState initial(Map<Long, Settlement> settlements) {
-    return WorldState.builder()
-        .tick(0)
-        .settlements(settlements)
-        .build();
-  }
 }

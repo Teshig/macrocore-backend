@@ -10,7 +10,7 @@ import org.grimjo.macrocore.game.model.actor.NpcStatus;
 @Builder
 @RequiredArgsConstructor
 public class SurvivalService {
-  public SurvivalResult processDailySurvival(List<NpcBase> population, long foodStock) {
+  public SurvivalServiceResult processDailySurvival(List<NpcBase> population, long foodStock) {
     List<NpcBase> updatedPopulation = new ArrayList<>(population.size());
     long currentFood = foodStock;
 
@@ -39,11 +39,9 @@ public class SurvivalService {
       updatedPopulation.add(builder.build());
     }
 
-    return new SurvivalResult(updatedPopulation, currentFood);
+    return SurvivalServiceResult.builder()
+        .survivors(updatedPopulation)
+        .remainingFood(currentFood)
+        .build();
   }
-
-  public record SurvivalResult(
-      List<NpcBase> survivors,
-      long remainingFood
-  ) {}
 }

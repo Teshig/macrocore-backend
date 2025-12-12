@@ -11,10 +11,10 @@ import org.grimjo.macrocore.game.processor.SettlementProcessingContext;
 import org.junit.jupiter.api.Test;
 
 class SurvivalPolicyTest {
-  private final SurvivalPolicy policy = new SurvivalPolicy();
+  private final SurvivalPolicy policy = SurvivalPolicy.builder().build();
 
   @Test
-  void shouldIssueGatherFoodDecree_WhenFoodIsCritical() {
+  void issueGatherFoodDecree_whenFoodIsCritical() {
     // GIVEN
     var hungryPop = List.of(NpcBase.builder().build(), NpcBase.builder().build());
 
@@ -36,7 +36,7 @@ class SurvivalPolicyTest {
   }
 
   @Test
-  void shouldDoNothing_WhenFoodIsEnough() {
+  void doNothing_whenFoodIsEnough() {
     // GIVEN
     var pop = List.of(NpcBase.builder().build());
     var context = SettlementProcessingContext.builder()

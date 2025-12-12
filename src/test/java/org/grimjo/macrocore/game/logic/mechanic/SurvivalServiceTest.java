@@ -8,10 +8,10 @@ import org.grimjo.macrocore.game.model.actor.NpcStatus;
 import org.junit.jupiter.api.Test;
 
 class SurvivalServiceTest {
-  private final SurvivalService service = new SurvivalService();
+  private final SurvivalService service = SurvivalService.builder().build();
 
   @Test
-  void shouldFeedEveryone() {
+  void feedEveryone() {
     // GIVEN
     long foodStock = 100L;
     var peasant = NpcBase.builder().id(1L).hunger(50).build();
@@ -21,9 +21,9 @@ class SurvivalServiceTest {
     var result = service.processDailySurvival(population, foodStock);
 
     // THEN
-    assertThat(result.remainingFood()).isEqualTo(99L);
+    assertThat(result.getRemainingFood()).isEqualTo(99L);
 
-    assertThat(result.survivors())
+    assertThat(result.getSurvivors())
         .hasSize(1)
         .first()
         .satisfies(
@@ -34,7 +34,7 @@ class SurvivalServiceTest {
   }
 
   @Test
-  void shouldStarvePopulation() {
+  void starvePopulation() {
     // GIVEN
     long foodStock = 0L;
     var peasant = NpcBase.builder().id(1L).hunger(10).build();
@@ -44,12 +44,16 @@ class SurvivalServiceTest {
     var result = service.processDailySurvival(population, foodStock);
 
     // THEN
-    assertThat(result.remainingFood()).isEqualTo(0L);
-    assertThat(result.survivors()).hasSize(1).first().extracting(NpcBase::getHunger).isEqualTo(20);
+    assertThat(result.getRemainingFood()).isEqualTo(0L);
+    assertThat(result.getSurvivors())
+        .hasSize(1)
+        .first()
+        .extracting(NpcBase::getHunger)
+        .isEqualTo(20);
   }
 
   @Test
-  void shouldKillStarvingNpc() {
+  void killStarvingNpc() {
     // GIVEN
     long foodStock = 0L;
     var dyingPeasant = NpcBase.builder().id(1L).hunger(95).build();
@@ -59,10 +63,35 @@ class SurvivalServiceTest {
     var result = service.processDailySurvival(population, foodStock);
 
     // THEN
-    assertThat(result.survivors())
+    assertThat(result.getSurvivors())
         .hasSize(1)
         .first()
         .extracting(NpcBase::getStatus)
         .isEqualTo(NpcStatus.DEAD);
+  }
+
+  @Test
+  void processDailySurvival_skipAlreadyDeadNpcs() {
+    // GIVEN
+    long initialFood = 100L;
+
+    var deadNpc = NpcBase.builder().id(1L).status(NpcStatus.DEAD).hunger(50).build();
+    var livingNpc = NpcBase.builder().id(2L).status(NpcStatus.ALIVE).hunger(50).build();
+    List<NpcBase> population = List.of(deadNpc, livingNpc);
+
+    // WHEN
+    var result = service.processDailySurvival(population, initialFood);
+
+    // THEN
+    assertThat(result.getRemainingFood()).isEqualTo(99L);
+    assertThat(result.getSurvivors())
+        .filteredOn(npc -> npc.getId() == 1L)
+        .hasSize(1)
+        .first()
+        .satisfies(
+            npc -> {
+              assertThat(npc.isDead()).isTrue();
+              assertThat(npc.getHunger()).isEqualTo(50);
+            });
   }
 }

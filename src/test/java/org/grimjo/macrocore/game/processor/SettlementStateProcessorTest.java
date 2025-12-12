@@ -1,5 +1,6 @@
 package org.grimjo.macrocore.game.processor;
 
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
@@ -8,13 +9,12 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import org.grimjo.macrocore.game.logic.mechanic.LifecycleServiceResult;
 import org.grimjo.macrocore.game.logic.mechanic.LifecycleService;
-import org.grimjo.macrocore.game.logic.mechanic.LifecycleService.LifecycleResult;
 import org.grimjo.macrocore.game.logic.mechanic.SurvivalService;
-import org.grimjo.macrocore.game.logic.mechanic.SurvivalService.SurvivalResult;
+import org.grimjo.macrocore.game.logic.mechanic.SurvivalServiceResult;
 import org.grimjo.macrocore.game.logic.mechanic.TownAssemblyService;
 import org.grimjo.macrocore.game.model.settlement.SmallSettlement;
 import org.junit.jupiter.api.Test;
@@ -30,23 +30,20 @@ class SettlementStateProcessorTest {
   @Mock private LifecycleService lifecycleService;
   @Mock private Map<Long, List<Object>> policiesConfig;
 
-  @InjectMocks
-  private SettlementStateProcessor processor;
+  @InjectMocks private SettlementStateProcessor processor;
 
   @Test
-  void shouldProcessSmallSettlementPipeline() {
+  void processSmallSettlementPipeline() {
     // GIVEN
-    var settlement = SmallSettlement.builder()
-        .id(1L)
-        .foodStock(100L)
-        .build();
+    var settlement = SmallSettlement.builder().id(1L).foodStock(100L).build();
 
     when(survivalService.processDailySurvival(anyList(), anyLong()))
-        .thenReturn(new SurvivalResult(Collections.emptyList(), 90L));
+        .thenReturn(
+            SurvivalServiceResult.builder().survivors(emptyList()).remainingFood(90L).build());
     when(lifecycleService.processLifecycle(anyList()))
-        .thenReturn(new LifecycleResult(Collections.emptyList(), Collections.emptyList()));
-    when(assemblyService.holdMeeting(any(), any()))
-        .thenReturn(Collections.emptyList());
+        .thenReturn(
+            LifecycleServiceResult.builder().survivors(emptyList()).corpses(emptyList()).build());
+    when(assemblyService.holdMeeting(any(), any())).thenReturn(emptyList());
 
     // WHEN
     var result = processor.process(settlement);

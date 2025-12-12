@@ -45,7 +45,7 @@ class InMemoryStateHolderTest {
   }
 
   @Test
-  void update_shouldSetNewWorldState() {
+  void update_setNewWorldState() {
     // GIVEN
     stateHolder.loadWorld();
 

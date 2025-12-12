@@ -25,11 +25,11 @@ class LifecycleServiceTest {
     var result = service.processLifecycle(mixedPopulation);
 
     // THEN
-    assertThat(result.survivors())
+    assertThat(result.getSurvivors())
         .hasSize(2)
         .extracting(NpcBase::getId)
         .containsExactlyInAnyOrder(1L, 3L);
-    assertThat(result.newCorpses())
+    assertThat(result.getCorpses())
         .hasSize(1)
         .first()
         .extracting(Corpse::getOriginalNpcId)
@@ -45,8 +45,8 @@ class LifecycleServiceTest {
     var result = service.processLifecycle(emptyPopulation);
 
     // THEN
-    assertThat(result.survivors()).isEmpty();
-    assertThat(result.newCorpses()).isEmpty();
+    assertThat(result.getSurvivors()).isEmpty();
+    assertThat(result.getCorpses()).isEmpty();
   }
 
   @Test
@@ -59,7 +59,7 @@ class LifecycleServiceTest {
     var result = service.processLifecycle(allAlive);
 
     // THEN
-    assertThat(result.survivors()).hasSize(1);
-    assertThat(result.newCorpses()).isEmpty();
+    assertThat(result.getSurvivors()).hasSize(1);
+    assertThat(result.getCorpses()).isEmpty();
   }
 }

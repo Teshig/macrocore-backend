@@ -11,11 +11,11 @@ import org.grimjo.macrocore.game.model.item.Corpse;
 @RequiredArgsConstructor
 public class LifecycleService {
 
-  public LifecycleResult processLifecycle(List<NpcBase> mixedPopulation) {
+  public LifecycleServiceResult processLifecycle(List<NpcBase> population) {
     List<NpcBase> survivors = new ArrayList<>();
     List<Corpse> newCorpses = new ArrayList<>();
 
-    for (NpcBase npc : mixedPopulation) {
+    for (NpcBase npc : population) {
       if (npc.isDead()) {
         newCorpses.add(Corpse.from(npc));
       } else {
@@ -23,11 +23,6 @@ public class LifecycleService {
       }
     }
 
-    return new LifecycleResult(survivors, newCorpses);
+    return LifecycleServiceResult.builder().survivors(survivors).corpses(newCorpses).build();
   }
-
-  public record LifecycleResult(
-      List<NpcBase> survivors,
-      List<Corpse> newCorpses
-  ) {}
 }

@@ -30,7 +30,7 @@ public class SettlementStateProcessor {
     var survivalResult =
         survivalService.processDailySurvival(small.getSettlers(), small.getFoodStock());
 
-    var lifecycleResult = lifecycleService.processLifecycle(survivalResult.survivors());
+    var lifecycleResult = lifecycleService.processLifecycle(survivalResult.getSurvivors());
 
     var context =
         SettlementProcessingContext.builder()
@@ -42,9 +42,9 @@ public class SettlementStateProcessor {
     var decrees = assemblyService.holdMeeting(context, policies);
 
     return small.toBuilder()
-        .foodStock(survivalResult.remainingFood())
+        .foodStock(survivalResult.getRemainingFood())
         .clearSettlers()
-        .settlers(lifecycleResult.survivors())
+        .settlers(lifecycleResult.getSurvivors())
         .clearDecrees()
         .decrees(decrees)
         .build();

@@ -27,7 +27,7 @@ class GameEngineTest {
   private GameEngine gameEngine;
 
   @Test
-  void processTick_ShouldIncrementTickAndProcessAllSettlements() {
+  void processTick_incrementTickAndProcessAllSettlements() {
     // GIVEN
     var s1 = SmallSettlement.builder().id(1L).build();
     var s2 = SmallSettlement.builder().id(2L).build();
@@ -58,7 +58,7 @@ class GameEngineTest {
   }
 
   @Test
-  void processTick_ShouldHandleEmptyWorld() {
+  void processTick_handleEmptyWorld() {
     // GIVEN
     var currentWorld = WorldState.builder()
         .tick(10L)

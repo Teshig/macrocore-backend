@@ -25,7 +25,7 @@ class TownAssemblyServiceTest {
   private final TownAssemblyService service = TownAssemblyService.builder().build();
 
   @Test
-  void holdMeeting_ShouldReturnDecreesFromAllPolicies() {
+  void holdMeeting_returnDecreesFromAllPolicies() {
     // GIVEN
     var context = SettlementProcessingContext.builder().build();
     var decreeA = SimpleDecree.builder().type(DecreeType.FOOD_SUPPLY).build();
@@ -48,7 +48,7 @@ class TownAssemblyServiceTest {
   }
 
   @Test
-  void holdMeeting_ShouldReturnEmptyListWhenNoPoliciesAreActive() {
+  void holdMeeting_returnEmptyListWhenNoPoliciesAreActive() {
     // GIVEN
     var context = SettlementProcessingContext.builder().build();
 
