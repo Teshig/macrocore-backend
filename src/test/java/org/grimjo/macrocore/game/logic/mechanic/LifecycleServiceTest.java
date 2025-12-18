@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import org.grimjo.macrocore.game.model.actor.NpcBase;
 import org.grimjo.macrocore.game.model.actor.NpcStatus;
-import org.grimjo.macrocore.game.model.item.Corpse;
+import org.grimjo.macrocore.game.model.object.Corpse;
 import org.junit.jupiter.api.Test;
 
 class LifecycleServiceTest {

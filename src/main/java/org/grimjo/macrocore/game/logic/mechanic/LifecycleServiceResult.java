@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Builder;
 import lombok.Value;
 import org.grimjo.macrocore.game.model.actor.NpcBase;
-import org.grimjo.macrocore.game.model.item.Corpse;
+import org.grimjo.macrocore.game.model.object.Corpse;
 
 @Value
 @Builder

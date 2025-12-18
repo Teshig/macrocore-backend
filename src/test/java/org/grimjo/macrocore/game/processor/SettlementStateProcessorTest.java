@@ -17,6 +17,8 @@ import org.grimjo.macrocore.game.logic.mechanic.SurvivalService;
 import org.grimjo.macrocore.game.logic.mechanic.SurvivalServiceResult;
 import org.grimjo.macrocore.game.logic.mechanic.TownAssemblyService;
 import org.grimjo.macrocore.game.model.settlement.SmallSettlement;
+import org.grimjo.macrocore.game.processor.settlement.SettlementProcessingContext;
+import org.grimjo.macrocore.game.processor.settlement.SettlementStateProcessor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

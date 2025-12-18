@@ -9,9 +9,8 @@ import static org.mockito.Mockito.when;
 import java.util.Collections;
 import java.util.Map;
 import org.grimjo.macrocore.game.model.global.WorldState;
-import org.grimjo.macrocore.game.model.settlement.Settlement;
 import org.grimjo.macrocore.game.model.settlement.SmallSettlement;
-import org.grimjo.macrocore.game.processor.SettlementStateProcessor;
+import org.grimjo.macrocore.game.processor.settlement.SettlementStateProcessor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -37,9 +36,9 @@ class GameEngineTest {
         .settlements(Map.of(1L, s1, 2L, s2))
         .build();
 
-    when(settlementProcessor.process(any(Settlement.class)))
+    when(settlementProcessor.process(any(SmallSettlement.class)))
         .thenAnswer(invocation -> {
-          Settlement incoming = invocation.getArgument(0);
+          SmallSettlement incoming = invocation.getArgument(0);
           if (incoming.getId() == 1L) {
             return SmallSettlement.builder().id(1L).foodStock(10L).build();
           }
@@ -51,7 +50,7 @@ class GameEngineTest {
 
     // THEN
     assertThat(nextWorld.getTick()).isEqualTo(6L);
-    verify(settlementProcessor, times(2)).process(any(Settlement.class));
+    verify(settlementProcessor, times(2)).process(any(SmallSettlement.class));
     assertThat(nextWorld.getSettlements()).hasSize(2);
     assertThat(nextWorld.getSettlements().get(1L).getFoodStock()).isEqualTo(10L);
     assertThat(nextWorld.getSettlements().get(2L).getFoodStock()).isEqualTo(20L);

@@ -9,7 +9,7 @@ import java.util.List;
 import org.grimjo.macrocore.game.model.politic.DecreeType;
 import org.grimjo.macrocore.game.model.politic.Policy;
 import org.grimjo.macrocore.game.model.politic.SimpleDecree;
-import org.grimjo.macrocore.game.processor.SettlementProcessingContext;
+import org.grimjo.macrocore.game.processor.settlement.SettlementProcessingContext;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
