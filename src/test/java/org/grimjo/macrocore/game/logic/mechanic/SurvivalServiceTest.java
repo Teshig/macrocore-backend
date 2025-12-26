@@ -14,7 +14,7 @@ class SurvivalServiceTest {
   void feedEveryone() {
     // GIVEN
     long foodStock = 100L;
-    var peasant = NpcBase.builder().id(1L).hunger(50).build();
+    var peasant = NpcBase.builder().id("1L").hunger(50).build();
     List<NpcBase> population = List.of(peasant);
 
     // WHEN
@@ -28,7 +28,7 @@ class SurvivalServiceTest {
         .first()
         .satisfies(
             p -> {
-              assertThat(p.getId()).isEqualTo(1L);
+              assertThat(p.getId()).isEqualTo("1L");
               assertThat(p.getHunger()).isZero();
             });
   }
@@ -37,7 +37,7 @@ class SurvivalServiceTest {
   void starvePopulation() {
     // GIVEN
     long foodStock = 0L;
-    var peasant = NpcBase.builder().id(1L).hunger(10).build();
+    var peasant = NpcBase.builder().id("1L").hunger(10).build();
     List<NpcBase> population = List.of(peasant);
 
     // WHEN
@@ -56,7 +56,7 @@ class SurvivalServiceTest {
   void killStarvingNpc() {
     // GIVEN
     long foodStock = 0L;
-    var dyingPeasant = NpcBase.builder().id(1L).hunger(95).build();
+    var dyingPeasant = NpcBase.builder().id("1L").hunger(95).build();
     List<NpcBase> population = List.of(dyingPeasant);
 
     // WHEN
@@ -75,8 +75,8 @@ class SurvivalServiceTest {
     // GIVEN
     long initialFood = 100L;
 
-    var deadNpc = NpcBase.builder().id(1L).status(NpcStatus.DEAD).hunger(50).build();
-    var livingNpc = NpcBase.builder().id(2L).status(NpcStatus.ALIVE).hunger(50).build();
+    var deadNpc = NpcBase.builder().id("1L").status(NpcStatus.DEAD).hunger(50).build();
+    var livingNpc = NpcBase.builder().id("2L").status(NpcStatus.ALIVE).hunger(50).build();
     List<NpcBase> population = List.of(deadNpc, livingNpc);
 
     // WHEN
@@ -85,7 +85,7 @@ class SurvivalServiceTest {
     // THEN
     assertThat(result.getRemainingFood()).isEqualTo(99L);
     assertThat(result.getSurvivors())
-        .filteredOn(npc -> npc.getId() == 1L)
+        .filteredOn(npc -> npc.getId().equals("1L"))
         .hasSize(1)
         .first()
         .satisfies(

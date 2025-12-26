@@ -7,7 +7,7 @@ import java.util.List;
 import org.grimjo.macrocore.game.model.actor.NpcBase;
 import org.grimjo.macrocore.game.model.politic.Decree;
 import org.grimjo.macrocore.game.model.politic.DecreeType;
-import org.grimjo.macrocore.game.processor.SettlementProcessingContext;
+import org.grimjo.macrocore.game.processor.settlement.SettlementProcessingContext;
 import org.junit.jupiter.api.Test;
 
 class SurvivalPolicyTest {
@@ -20,7 +20,6 @@ class SurvivalPolicyTest {
 
     var context = SettlementProcessingContext.builder()
         .foodStock(1L)
-        .population(hungryPop)
         .decrees(Collections.emptyList())
         .build();
 
@@ -41,7 +40,6 @@ class SurvivalPolicyTest {
     var pop = List.of(NpcBase.builder().build());
     var context = SettlementProcessingContext.builder()
         .foodStock(100L)
-        .population(pop)
         .build();
 
     // WHEN

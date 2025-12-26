@@ -4,12 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import java.util.Collections;
 import java.util.List;
 import org.grimjo.macrocore.game.model.politic.DecreeType;
 import org.grimjo.macrocore.game.model.politic.Policy;
 import org.grimjo.macrocore.game.model.politic.SimpleDecree;
-import org.grimjo.macrocore.game.processor.SettlementProcessingContext;
+import org.grimjo.macrocore.game.processor.settlement.SettlementProcessingContext;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -28,8 +27,9 @@ class TownAssemblyServiceTest {
   void holdMeeting_returnDecreesFromAllPolicies() {
     // GIVEN
     var context = SettlementProcessingContext.builder().build();
+
     var decreeA = SimpleDecree.builder().type(DecreeType.FOOD_SUPPLY).build();
-    var decreeB = SimpleDecree.builder().type(DecreeType.FOOD_SUPPLY).build();
+    var decreeB = SimpleDecree.builder().type(DecreeType.COLLECT_MATERIALS).build();
 
     when(survivalPolicy.evaluate(any(SettlementProcessingContext.class)))
         .thenReturn(List.of(decreeA));
@@ -48,12 +48,35 @@ class TownAssemblyServiceTest {
   }
 
   @Test
+  void holdMeeting_shouldDeduplicateDecreesByType() {
+    // GIVEN
+    var context = SettlementProcessingContext.builder().build();
+
+    var decreeA = SimpleDecree.builder().type(DecreeType.FOOD_SUPPLY).build();
+    var decreeB = SimpleDecree.builder().type(DecreeType.FOOD_SUPPLY).build();
+
+    when(survivalPolicy.evaluate(any(SettlementProcessingContext.class)))
+        .thenReturn(List.of(decreeA));
+    when(anotherPolicy.evaluate(any(SettlementProcessingContext.class)))
+        .thenReturn(List.of(decreeB));
+
+    List<Policy> activePolicies = List.of(survivalPolicy, anotherPolicy);
+
+    // WHEN
+    var resultDecrees = service.holdMeeting(context, activePolicies);
+
+    // THEN
+    assertThat(resultDecrees).hasSize(1);
+    assertThat(resultDecrees.getFirst().getType()).isEqualTo(DecreeType.FOOD_SUPPLY);
+  }
+
+  @Test
   void holdMeeting_returnEmptyListWhenNoPoliciesAreActive() {
     // GIVEN
     var context = SettlementProcessingContext.builder().build();
 
     // WHEN
-    var resultDecrees = service.holdMeeting(context, Collections.emptyList());
+    var resultDecrees = service.holdMeeting(context, List.of());
 
     // THEN
     assertThat(resultDecrees).isEmpty();

@@ -2,18 +2,22 @@ package org.grimjo.macrocore.game.model.settlement;
 
 import java.util.List;
 import lombok.Builder;
-import lombok.Singular;
+import lombok.Builder.Default;
 import lombok.Value;
-import org.grimjo.macrocore.game.model.actor.NpcBase;
+import org.grimjo.macrocore.game.model.order.SimpleOrder;
 import org.grimjo.macrocore.game.model.politic.Decree;
+import org.grimjo.macrocore.game.model.politic.Policy;
 
 @Value
 @Builder(toBuilder = true)
-public class SmallSettlement implements Settlement {
-  long id;
+public class SmallSettlement {
+  String id;
+  String regionId;
+
   long foodStock;
   long foodRequirements;
 
-  @Singular List<NpcBase> settlers;
-  @Singular List<Decree> decrees;
+  @Default List<Decree> decrees = List.of();
+  @Default List<SimpleOrder> orders = List.of();
+  @Default List<Policy> policies = List.of();
 }

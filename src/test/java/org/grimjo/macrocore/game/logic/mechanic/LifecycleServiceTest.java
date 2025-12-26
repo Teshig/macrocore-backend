@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import org.grimjo.macrocore.game.model.actor.NpcBase;
 import org.grimjo.macrocore.game.model.actor.NpcStatus;
-import org.grimjo.macrocore.game.model.item.Corpse;
+import org.grimjo.macrocore.game.model.object.Corpse;
 import org.junit.jupiter.api.Test;
 
 class LifecycleServiceTest {
@@ -15,9 +15,9 @@ class LifecycleServiceTest {
   @Test
   void processLifecycle_separateAliveFromDead() {
     // GIVEN
-    var livingNpc = NpcBase.builder().id(1L).status(NpcStatus.ALIVE).build();
-    var dyingNpc = NpcBase.builder().id(2L).status(NpcStatus.DEAD).build();
-    var anotherLivingNpc = NpcBase.builder().id(3L).status(NpcStatus.ALIVE).build();
+    var livingNpc = NpcBase.builder().id("1L").status(NpcStatus.ALIVE).build();
+    var dyingNpc = NpcBase.builder().id("2L").status(NpcStatus.DEAD).build();
+    var anotherLivingNpc = NpcBase.builder().id("3L").status(NpcStatus.ALIVE).build();
 
     List<NpcBase> mixedPopulation = List.of(livingNpc, dyingNpc, anotherLivingNpc);
 
@@ -28,12 +28,12 @@ class LifecycleServiceTest {
     assertThat(result.getSurvivors())
         .hasSize(2)
         .extracting(NpcBase::getId)
-        .containsExactlyInAnyOrder(1L, 3L);
+        .containsExactlyInAnyOrder("1L", "3L");
     assertThat(result.getCorpses())
         .hasSize(1)
         .first()
         .extracting(Corpse::getOriginalNpcId)
-        .isEqualTo(2L);
+        .isEqualTo("2L");
   }
 
   @Test
@@ -52,7 +52,7 @@ class LifecycleServiceTest {
   @Test
   void processLifecycle_handleAllAlivePopulation() {
     // GIVEN
-    var livingNpc = NpcBase.builder().id(1L).status(NpcStatus.ALIVE).build();
+    var livingNpc = NpcBase.builder().id("1L").status(NpcStatus.ALIVE).build();
     List<NpcBase> allAlive = List.of(livingNpc);
 
     // WHEN
