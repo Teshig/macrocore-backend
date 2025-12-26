@@ -20,7 +20,6 @@ class SurvivalPolicyTest {
 
     var context = SettlementProcessingContext.builder()
         .foodStock(1L)
-        .population(hungryPop)
         .decrees(Collections.emptyList())
         .build();
 
@@ -41,7 +40,6 @@ class SurvivalPolicyTest {
     var pop = List.of(NpcBase.builder().build());
     var context = SettlementProcessingContext.builder()
         .foodStock(100L)
-        .population(pop)
         .build();
 
     // WHEN

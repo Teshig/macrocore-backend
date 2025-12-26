@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Singular;
 import lombok.Value;
 import org.grimjo.macrocore.game.model.politic.Decree;
+import org.grimjo.macrocore.game.model.settlement.SettlementTransaction;
 
 @Value
 @Builder
@@ -13,4 +14,7 @@ public class SettlementProcessingContext {
 
   @Singular
   List<Decree> decrees;
+
+  @Builder.Default
+  List<SettlementTransaction> transactions = List.of();
 }

@@ -1,7 +1,9 @@
 package org.grimjo.macrocore.game.model.actor;
 
+import java.util.List;
 import lombok.Builder;
 import lombok.Value;
+import org.grimjo.macrocore.game.model.action.Action;
 import org.grimjo.macrocore.game.model.world.RoomId;
 
 @Value
@@ -15,7 +17,14 @@ public class NpcBase {
   RoomId roomId;
   int health;
   int hunger;
+  int money;
   @Builder.Default NpcStatus status = NpcStatus.ALIVE;
+
+  @Builder.Default
+  List<Action> actionQueue = List.of();
+
+  String settlementId;
+  String currentOrderId;
 
   public int getConsumption() {
     return DAILY_CONSUMPTION;

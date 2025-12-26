@@ -13,7 +13,7 @@ import org.grimjo.macrocore.game.processor.settlement.SettlementProcessingContex
 @Builder
 @RequiredArgsConstructor
 public class SurvivalPolicy implements Policy {
-  private static final long FOOD_THRESHOLD = 500L;
+  private static final long FOOD_THRESHOLD = 100L;
 
   @Override
   public List<Decree> evaluate(SettlementProcessingContext context) {

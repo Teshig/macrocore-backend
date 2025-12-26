@@ -27,9 +27,11 @@ public class SimulationTicker {
 
       stateHolder.update(nextWorld);
       log.debug(
-          "Tick {} processed. Settlements: {}",
+          "Tick {} processed.\nSettlements: {}\n" + "Populations: {}\n" + "Corpses: {}\n",
           nextWorld.getTick(),
-          nextWorld.getSettlements());
+          nextWorld.getSettlements(),
+          nextWorld.getPopulation(),
+          nextWorld.getCorpses());
     } catch (Exception ex) {
       log.error("Error during game tick processing", ex);
     }

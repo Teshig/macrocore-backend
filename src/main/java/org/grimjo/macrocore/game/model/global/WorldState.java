@@ -20,7 +20,7 @@ public class WorldState {
 
   Map<RoomId, Room> rooms;
   Map<String, NpcBase> population;
-  Map<Long, SmallSettlement> settlements;
-  @Default Map<RoomId, List<Corpse>> corpses = Map.of();;
+  Map<String, SmallSettlement> settlements;
+  @Default Map<RoomId, List<Corpse>> corpses = Map.of();
   @Default SortedMap<Long, List<String>> purgeSchedule = Collections.emptySortedMap();;
 }
