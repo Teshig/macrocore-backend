@@ -5,9 +5,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
-import org.grimjo.macrocore.game.model.politic.DecreeType;
-import org.grimjo.macrocore.game.model.politic.Policy;
-import org.grimjo.macrocore.game.model.politic.SimpleDecree;
+import org.grimjo.macrocore.game.domain.politic.DecreeType;
+import org.grimjo.macrocore.game.domain.politic.Policy;
+import org.grimjo.macrocore.game.domain.politic.SimpleDecree;
 import org.grimjo.macrocore.game.processor.settlement.SettlementProcessingContext;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

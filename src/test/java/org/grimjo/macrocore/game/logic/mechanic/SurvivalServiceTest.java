@@ -3,8 +3,8 @@ package org.grimjo.macrocore.game.logic.mechanic;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-import org.grimjo.macrocore.game.model.actor.NpcBase;
-import org.grimjo.macrocore.game.model.actor.NpcStatus;
+import org.grimjo.macrocore.game.domain.actor.NpcBase;
+import org.grimjo.macrocore.game.domain.actor.NpcStatus;
 import org.junit.jupiter.api.Test;
 
 class SurvivalServiceTest {

@@ -4,11 +4,12 @@ import java.util.Map;
 import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.Value;
-import org.grimjo.macrocore.game.model.actor.NpcBase;
+import org.grimjo.macrocore.game.domain.actor.NpcBase;
+import org.grimjo.macrocore.game.domain.actor.NpcBase.NpcId;
 
 @Value
 @Builder
 public class SurvivalProcessorResult {
-  @Default Map<String, NpcBase> alive = Map.of();
-  @Default Map<String, NpcBase> dead = Map.of();
+  @Default Map<NpcId, NpcBase> alive = Map.of();
+  @Default Map<NpcId, NpcBase> dead = Map.of();
 }

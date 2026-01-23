@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-12-26-003-1
+      author: grimjo
+      changes:
+        - createTable:
+            schemaName: game
+            tableName: zone_snapshot
+            columns:
+              - column:
+                  name: snapshot_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: zone_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: state
+                  type: JSONB
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 2025-12-26-003-2
+      author: grimjo
+      changes:
+        - addPrimaryKey:
+            schemaName: game
+            tableName: zone_snapshot
+            columnNames: snapshot_id, zone_id
+            constraintName: pk_zone_snapshot
+
+  - changeSet:
+      id: 2025-12-26-003-3
+      author: grimjo
+      changes:
+        - sql:
+            dbms: postgresql
+            sql: CREATE INDEX idx_zones_state_gin ON game.zone_snapshot USING gin (state);

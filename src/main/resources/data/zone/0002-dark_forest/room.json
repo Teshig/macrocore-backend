@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "name": "Лес",
+    "description": "Темный и страшный лес.",
+    "exits": {
+      "SOUTH": {
+        "zoneId": 1,
+        "roomId": 2
+      }
+    }
+  }
+]

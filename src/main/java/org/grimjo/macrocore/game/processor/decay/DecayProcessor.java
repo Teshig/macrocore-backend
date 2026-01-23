@@ -10,9 +10,9 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
-import org.grimjo.macrocore.game.model.actor.NpcBase;
-import org.grimjo.macrocore.game.model.object.Corpse;
-import org.grimjo.macrocore.game.model.world.RoomId;
+import org.grimjo.macrocore.game.domain.actor.NpcBase;
+import org.grimjo.macrocore.game.domain.object.Corpse;
+import org.grimjo.macrocore.game.domain.world.Room.RoomId;
 import org.grimjo.macrocore.game.utils.ImmutabilityUtils;
 
 @Builder

@@ -1,0 +1,10 @@
+[
+  {
+    "id": "villager_basic",
+    "name": "Поселенец",
+    "baseStats": {
+      "health": 100,
+      "speed": 10
+    }
+  }
+]

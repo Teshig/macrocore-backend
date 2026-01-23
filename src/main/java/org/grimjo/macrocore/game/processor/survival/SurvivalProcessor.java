@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.stream.Collector;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
-import org.grimjo.macrocore.game.model.actor.NpcBase;
-import org.grimjo.macrocore.game.model.actor.NpcStatus;
+import org.grimjo.macrocore.game.domain.actor.NpcBase;
+import org.grimjo.macrocore.game.domain.actor.NpcStatus;
 
 @Builder
 @RequiredArgsConstructor

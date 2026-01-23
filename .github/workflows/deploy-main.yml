@@ -52,6 +52,18 @@ jobs:
       - name: Setup Flyctl
         uses: superfly/flyctl-actions/setup-flyctl@master
 
+      - name: Set Fly Secrets
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          DB_URL: ${{ secrets.DB_URL }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASS: ${{ secrets.DB_PASSWORD }}
+        run: |
+          flyctl secrets set \
+            DB_URL=$DB_URL \
+            DB_USER=$DB_USER \
+            DB_PASSWORD=$DB_PASS
+
       - name: Deploy to Fly.io
         run: flyctl deploy --remote-only
         env:

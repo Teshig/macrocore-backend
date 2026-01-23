@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-12-26-001-1
+      author: grimjo
+      changes:
+        - sql:
+            sql: CREATE SCHEMA IF NOT EXISTS game;

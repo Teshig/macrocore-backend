@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-12-26-010-1
+      author: grimjo
+      changes:
+        - createTable:
+            schemaName: game
+            tableName: room
+            columns:
+              - column:
+                  name: zone_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: room_id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: exits
+                  type: JSONB
+                  defaultValue: '{}'
+
+  - changeSet:
+      id: 2025-12-26-010-2
+      author: grimjo
+      changes:
+        - addPrimaryKey:
+            schemaName: game
+            tableName: room
+            columnNames: zone_id, room_id
+            constraintName: pk_room_static

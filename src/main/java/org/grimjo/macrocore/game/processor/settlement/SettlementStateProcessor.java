@@ -8,9 +8,9 @@ import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.grimjo.macrocore.game.logic.mechanic.OrderService;
 import org.grimjo.macrocore.game.logic.mechanic.TownAssemblyService;
-import org.grimjo.macrocore.game.model.order.SimpleOrder;
-import org.grimjo.macrocore.game.model.settlement.SettlementTransaction;
-import org.grimjo.macrocore.game.model.settlement.SmallSettlement;
+import org.grimjo.macrocore.game.domain.order.SimpleOrder;
+import org.grimjo.macrocore.game.domain.settlement.SettlementTransaction;
+import org.grimjo.macrocore.game.domain.settlement.SmallSettlement;
 import org.grimjo.macrocore.game.utils.ImmutabilityUtils;
 
 @Builder

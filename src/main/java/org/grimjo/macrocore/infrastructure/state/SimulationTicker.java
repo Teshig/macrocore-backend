@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.grimjo.macrocore.game.engine.GameEngine;
-import org.grimjo.macrocore.game.model.global.WorldState;
+import org.grimjo.macrocore.game.domain.global.WorldState;
 import org.springframework.scheduling.annotation.Scheduled;
 
 @Slf4j
@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 @RequiredArgsConstructor
 public class SimulationTicker {
   private final GameEngine gameEngine;
-  private final InMemoryStateHolder stateHolder;
+  private final StateHolder stateHolder;
 
   @Scheduled(fixedRate = 3000)
   public void tick() {

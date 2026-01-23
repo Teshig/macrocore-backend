@@ -4,10 +4,10 @@ import java.util.Collections;
 import java.util.List;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
-import org.grimjo.macrocore.game.model.politic.Decree;
-import org.grimjo.macrocore.game.model.politic.DecreeType;
-import org.grimjo.macrocore.game.model.politic.Policy;
-import org.grimjo.macrocore.game.model.politic.SimpleDecree;
+import org.grimjo.macrocore.game.domain.politic.Decree;
+import org.grimjo.macrocore.game.domain.politic.DecreeType;
+import org.grimjo.macrocore.game.domain.politic.Policy;
+import org.grimjo.macrocore.game.domain.politic.SimpleDecree;
 import org.grimjo.macrocore.game.processor.settlement.SettlementProcessingContext;
 
 @Builder

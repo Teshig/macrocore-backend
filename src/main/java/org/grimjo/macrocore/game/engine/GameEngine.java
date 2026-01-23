@@ -8,10 +8,11 @@ import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.grimjo.macrocore.game.model.actor.NpcBase;
-import org.grimjo.macrocore.game.model.global.WorldState;
-import org.grimjo.macrocore.game.model.settlement.SettlementTransaction;
-import org.grimjo.macrocore.game.model.settlement.SmallSettlement;
+import org.grimjo.macrocore.game.domain.actor.NpcBase;
+import org.grimjo.macrocore.game.domain.actor.NpcBase.NpcId;
+import org.grimjo.macrocore.game.domain.global.WorldState;
+import org.grimjo.macrocore.game.domain.settlement.SettlementTransaction;
+import org.grimjo.macrocore.game.domain.settlement.SmallSettlement;
 import org.grimjo.macrocore.game.processor.brain.BrainProcessor;
 import org.grimjo.macrocore.game.processor.brain.BrainProcessorContext;
 import org.grimjo.macrocore.game.processor.brain.BrainProcessorResult;
@@ -38,7 +39,7 @@ public class GameEngine {
     long nextTick = currentWorld.getTick() + 1;
 
     SurvivalProcessorResult survivalResult = survivalProcessor.processAll(currentWorld.getPopulation().values());
-    Map<String, NpcBase> currentPopulation = new HashMap<>(survivalResult.getAlive());
+    Map<NpcId, NpcBase> currentPopulation = new HashMap<>(survivalResult.getAlive());
 
     BrainProcessorContext brainContext = BrainProcessorContext.from(currentWorld, currentPopulation);
     BrainProcessorResult brainResult = brainProcessor.process(brainContext);

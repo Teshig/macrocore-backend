@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1,
+    "name": "Settlement",
+    "description": "Some settlement",
+    "baseStats": {
+      "health": 100,
+      "speed": 10
+    }
+  }
+]

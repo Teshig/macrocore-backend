@@ -1,0 +1,85 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-12-26-005-1
+      author: grimjo
+      changes:
+        - createTable:
+            schemaName: game
+            tableName: npc_snapshot
+            columns:
+              - column:
+                  name: snapshot_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: zone_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: npc_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: room_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: settlement_id
+                  type: BIGINT
+              - column:
+                  name: is_dead
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: state
+                  type: JSONB
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 2025-12-26-005-2
+      author: grimjo
+      changes:
+        - addPrimaryKey:
+            schemaName: game
+            tableName: npc_snapshot
+            columnNames: snapshot_id, zone_id, npc_id
+            constraintName: pk_npc_snapshot
+
+  - changeSet:
+      id: 2025-12-26-005-3
+      author: grimjo
+      changes:
+        - createIndex:
+            schemaName: game
+            tableName: npc_snapshot
+            indexName: idx_population_zone
+            columns:
+              - column: { name: snapshot_id }
+              - column: { name: zone_id }
+
+  - changeSet:
+      id: 2025-12-26-005-4
+      author: grimjo
+      changes:
+        - createIndex:
+            schemaName: game
+            tableName: npc_snapshot
+            indexName: idx_population_room
+            columns:
+              - column: { name: snapshot_id }
+              - column: { name: room_id }
+
+  - changeSet:
+      id: 2025-12-26-005-5
+      author: grimjo
+      changes:
+        - sql:
+            dbms: postgresql
+            sql: CREATE INDEX idx_population_state_gin ON game.npc_snapshot USING gin (state);

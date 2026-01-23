@@ -7,17 +7,18 @@ import java.util.List;
 import java.util.Map;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
-import org.grimjo.macrocore.game.model.action.Action;
-import org.grimjo.macrocore.game.model.action.ActionType;
-import org.grimjo.macrocore.game.model.actor.NpcBase;
-import org.grimjo.macrocore.game.model.settlement.SettlementTransaction;
-import org.grimjo.macrocore.game.model.world.RoomId;
+import org.grimjo.macrocore.game.domain.action.Action;
+import org.grimjo.macrocore.game.domain.action.ActionType;
+import org.grimjo.macrocore.game.domain.actor.NpcBase;
+import org.grimjo.macrocore.game.domain.actor.NpcBase.NpcId;
+import org.grimjo.macrocore.game.domain.settlement.SettlementTransaction;
+import org.grimjo.macrocore.game.domain.world.Room.RoomId;
 
 @Builder
 @RequiredArgsConstructor
 public class TaskExecutionProcessor {
-  public TaskExecutionResult process(Map<String, NpcBase> population) {
-    Map<String, NpcBase> updatedNpcs = new HashMap<>();
+  public TaskExecutionResult process(Map<NpcId, NpcBase> population) {
+    Map<NpcId, NpcBase> updatedNpcs = new HashMap<>();
     List<SettlementTransaction> transactions = new ArrayList<>();
 
     for (NpcBase npc : population.values()) {

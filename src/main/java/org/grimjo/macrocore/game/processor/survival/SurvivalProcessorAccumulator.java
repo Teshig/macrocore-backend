@@ -3,13 +3,14 @@ package org.grimjo.macrocore.game.processor.survival;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Value;
-import org.grimjo.macrocore.game.model.actor.NpcBase;
-import org.grimjo.macrocore.game.model.actor.NpcStatus;
+import org.grimjo.macrocore.game.domain.actor.NpcBase;
+import org.grimjo.macrocore.game.domain.actor.NpcBase.NpcId;
+import org.grimjo.macrocore.game.domain.actor.NpcStatus;
 
 @Value
 public class SurvivalProcessorAccumulator {
-  Map<String, NpcBase> alive = new HashMap<>();
-  Map<String, NpcBase> dead = new HashMap<>();
+  Map<NpcId, NpcBase> alive = new HashMap<>();
+  Map<NpcId, NpcBase> dead = new HashMap<>();
 
   public void accept(NpcBase npc) {
     if (npc.getStatus() == NpcStatus.ALIVE) {

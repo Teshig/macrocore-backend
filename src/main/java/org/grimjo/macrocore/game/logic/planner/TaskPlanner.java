@@ -3,10 +3,10 @@ package org.grimjo.macrocore.game.logic.planner;
 import java.util.List;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
-import org.grimjo.macrocore.game.model.action.Action;
-import org.grimjo.macrocore.game.model.action.ActionType;
-import org.grimjo.macrocore.game.model.actor.NpcBase;
-import org.grimjo.macrocore.game.model.order.SimpleOrder;
+import org.grimjo.macrocore.game.domain.action.Action;
+import org.grimjo.macrocore.game.domain.action.ActionType;
+import org.grimjo.macrocore.game.domain.actor.NpcBase;
+import org.grimjo.macrocore.game.domain.order.SimpleOrder;
 
 @Builder
 @RequiredArgsConstructor

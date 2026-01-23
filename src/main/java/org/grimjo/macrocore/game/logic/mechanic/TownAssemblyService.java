@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.grimjo.macrocore.game.processor.settlement.SettlementProcessingContext;
-import org.grimjo.macrocore.game.model.politic.Decree;
-import org.grimjo.macrocore.game.model.politic.Policy;
+import org.grimjo.macrocore.game.domain.politic.Decree;
+import org.grimjo.macrocore.game.domain.politic.Policy;
 
 @Builder
 @RequiredArgsConstructor

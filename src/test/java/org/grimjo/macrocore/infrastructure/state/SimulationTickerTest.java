@@ -7,7 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.grimjo.macrocore.game.engine.GameEngine;
-import org.grimjo.macrocore.game.model.global.WorldState;
+import org.grimjo.macrocore.game.domain.global.WorldState;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,7 +20,7 @@ class SimulationTickerTest {
   private GameEngine gameEngine;
 
   @Mock
-  private InMemoryStateHolder stateHolder;
+  private StateHolder stateHolder;
 
   @InjectMocks
   private SimulationTicker simulationTicker;

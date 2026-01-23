@@ -6,10 +6,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
-import org.grimjo.macrocore.game.model.order.OrderType;
-import org.grimjo.macrocore.game.model.order.SimpleOrder;
-import org.grimjo.macrocore.game.model.politic.Decree;
-import org.grimjo.macrocore.game.model.politic.DecreeType;
+import org.grimjo.macrocore.game.domain.order.OrderType;
+import org.grimjo.macrocore.game.domain.order.SimpleOrder;
+import org.grimjo.macrocore.game.domain.politic.Decree;
+import org.grimjo.macrocore.game.domain.politic.DecreeType;
 
 @Builder
 @RequiredArgsConstructor

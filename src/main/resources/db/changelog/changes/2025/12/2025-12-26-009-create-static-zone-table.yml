@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-12-26-009-1
+      author: grimjo
+      changes:
+        - createTable:
+            schemaName: game
+            tableName: zone
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: TEXT

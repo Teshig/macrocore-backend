@@ -1,0 +1,25 @@
+[
+  {
+    "id": 1,
+    "name": "Главная площадь",
+    "description": "Центр поселения.",
+    "exits": {
+      "NORTH": "forest_edge"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Опушка леса",
+    "description": "Опушка темного леса.",
+    "exits": {
+      "NORTH": {
+        "zoneId": 2,
+        "roomId": 1
+      },
+      "SOUTH": {
+        "zoneId": 1,
+        "roomId": 1
+      }
+    }
+  }
+]

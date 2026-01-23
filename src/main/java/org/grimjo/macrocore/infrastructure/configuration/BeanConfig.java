@@ -1,5 +1,6 @@
 package org.grimjo.macrocore.infrastructure.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.grimjo.macrocore.game.engine.GameEngine;
 import org.grimjo.macrocore.game.logic.mechanic.LifecycleService;
 import org.grimjo.macrocore.game.logic.mechanic.OrderService;
@@ -12,8 +13,17 @@ import org.grimjo.macrocore.game.processor.decay.DecayProcessor;
 import org.grimjo.macrocore.game.processor.settlement.SettlementStateProcessor;
 import org.grimjo.macrocore.game.processor.survival.SurvivalProcessor;
 import org.grimjo.macrocore.game.processor.task.TaskExecutionProcessor;
-import org.grimjo.macrocore.infrastructure.state.InMemoryStateHolder;
+import org.grimjo.macrocore.infrastructure.persistence.repository.statics.ContentVersionRepository;
+import org.grimjo.macrocore.infrastructure.persistence.repository.statics.NpcRepository;
+import org.grimjo.macrocore.infrastructure.persistence.repository.statics.RoomRepository;
+import org.grimjo.macrocore.infrastructure.persistence.repository.snapshot.WorldSnapshotRepository;
+import org.grimjo.macrocore.infrastructure.persistence.service.SnapshotPersistenceService;
+import org.grimjo.macrocore.infrastructure.persistence.service.StaticPersistenceService;
 import org.grimjo.macrocore.infrastructure.state.SimulationTicker;
+import org.grimjo.macrocore.infrastructure.state.StateHolder;
+import org.grimjo.macrocore.infrastructure.state.genesis.GenesisService;
+import org.grimjo.macrocore.infrastructure.persistence.mapper.statics.NpcMapper;
+import org.grimjo.macrocore.infrastructure.persistence.mapper.statics.RoomStaticMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -38,10 +48,7 @@ public class BeanConfig {
 
   @Bean
   public SettlementStateProcessor settlementStateProcessor(
-      TownAssemblyService assemblyService,
-      SurvivalService survivalService,
-      LifecycleService lifecycleService,
-      OrderService orderService) {
+      TownAssemblyService assemblyService, OrderService orderService) {
 
     return SettlementStateProcessor.builder()
         .townAssemblyService(assemblyService)
@@ -90,12 +97,16 @@ public class BeanConfig {
   }
 
   @Bean
-  public InMemoryStateHolder inMemoryStateHolder(SurvivalPolicy survivalPolicy) {
-    return InMemoryStateHolder.builder().survivalPolicy(survivalPolicy).build();
+  public StateHolder inMemoryStateHolder(
+      GenesisService genesisService, SnapshotPersistenceService persistenceService) {
+    return StateHolder.builder()
+        .genesisService(genesisService)
+        .persistenceService(persistenceService)
+        .build();
   }
 
   @Bean
-  public SimulationTicker simulationTicker(GameEngine gameEngine, InMemoryStateHolder stateHolder) {
+  public SimulationTicker simulationTicker(GameEngine gameEngine, StateHolder stateHolder) {
     return SimulationTicker.builder().gameEngine(gameEngine).stateHolder(stateHolder).build();
   }
 
@@ -107,5 +118,45 @@ public class BeanConfig {
   @Bean
   public OrderService orderService() {
     return OrderService.builder().build();
+  }
+
+  @Bean
+  public StaticPersistenceService ContentLoader(
+      ContentVersionRepository versionRepository,
+      RoomRepository roomRepository,
+      NpcRepository templateRepository,
+      ObjectMapper objectMapper) {
+    return StaticPersistenceService.builder()
+        .versionRepository(versionRepository)
+        .roomRepository(roomRepository)
+        .templateRepository(templateRepository)
+        .objectMapper(objectMapper)
+        .build();
+  }
+
+  @Bean
+  public GenesisService genesisService(
+      ObjectMapper objectMapper, RoomStaticMapper roomStaticMapper, NpcMapper npcMapper) {
+    return GenesisService.builder()
+        .objectMapper(objectMapper)
+        .roomMapper(roomStaticMapper)
+        .npcMapper(npcMapper)
+        .build();
+  }
+
+  @Bean
+  public SnapshotPersistenceService worldStatePersistenceService(
+      WorldSnapshotRepository snapshotRepository) {
+    return SnapshotPersistenceService.builder().snapshotRepository(snapshotRepository).build();
+  }
+
+  @Bean
+  public RoomStaticMapper roomMapper() {
+    return RoomStaticMapper.builder().build();
+  }
+
+  @Bean
+  public NpcMapper npcMapper() {
+    return NpcMapper.builder().build();
   }
 }

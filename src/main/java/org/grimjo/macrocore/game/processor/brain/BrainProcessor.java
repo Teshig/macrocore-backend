@@ -8,11 +8,12 @@ import java.util.Optional;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.grimjo.macrocore.game.logic.planner.TaskPlanner;
-import org.grimjo.macrocore.game.model.action.Action;
-import org.grimjo.macrocore.game.model.action.ActionType;
-import org.grimjo.macrocore.game.model.actor.NpcBase;
-import org.grimjo.macrocore.game.model.order.SimpleOrder;
-import org.grimjo.macrocore.game.model.settlement.SmallSettlement;
+import org.grimjo.macrocore.game.domain.action.Action;
+import org.grimjo.macrocore.game.domain.action.ActionType;
+import org.grimjo.macrocore.game.domain.actor.NpcBase;
+import org.grimjo.macrocore.game.domain.actor.NpcBase.NpcId;
+import org.grimjo.macrocore.game.domain.order.SimpleOrder;
+import org.grimjo.macrocore.game.domain.settlement.SmallSettlement;
 
 @Builder
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class BrainProcessor {
 
   public BrainProcessorResult process(BrainProcessorContext context) {
 
-    Map<String, NpcBase> updatedNpcs = new HashMap<>();
+    Map<NpcId, NpcBase> updatedNpcs = new HashMap<>();
 
     for (NpcBase npc : context.getPopulation().values()) {
       if (!npc.getActionQueue().isEmpty()) {
