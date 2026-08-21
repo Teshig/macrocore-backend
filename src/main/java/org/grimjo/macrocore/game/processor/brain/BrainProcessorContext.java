@@ -7,10 +7,12 @@ import lombok.Value;
 import org.grimjo.macrocore.game.domain.actor.NpcBase;
 import org.grimjo.macrocore.game.domain.actor.NpcBase.NpcId;
 import org.grimjo.macrocore.game.domain.global.WorldState;
-import org.grimjo.macrocore.game.domain.object.Item;
+import org.grimjo.macrocore.game.domain.settlement.SmallSettlement.SettlementId;
 import org.grimjo.macrocore.game.domain.settlement.SmallSettlement;
 import org.grimjo.macrocore.game.domain.world.Room;
 import org.grimjo.macrocore.game.domain.world.Room.RoomId;
+
+import org.grimjo.macrocore.game.domain.object.Item;
 
 @Value
 @Builder
@@ -18,7 +20,7 @@ public class BrainProcessorContext {
   Map<NpcId, NpcBase> population;
   Map<RoomId, Room> rooms;
 
-  Map<String, SmallSettlement> settlements;
+  Map<SettlementId, SmallSettlement> settlements;
 
   Map<RoomId, List<Item>> groundItems;
 

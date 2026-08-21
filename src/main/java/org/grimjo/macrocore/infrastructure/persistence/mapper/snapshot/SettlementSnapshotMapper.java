@@ -15,6 +15,13 @@ public class SettlementSnapshotMapper {
         .build();
   }
 
+  public SmallSettlement toDomain(SettlementSnapshotEntity entity) {
+    return SmallSettlement.builder()
+        .id(SmallSettlement.SettlementId.of(entity.getSettlementId()))
+        .zoneId(org.grimjo.macrocore.game.domain.world.Zone.ZoneId.of(entity.getZoneId()))
+        .build();
+  }
+
   private SettlementStateJson toJsonState(SmallSettlement domain) {
     return SettlementStateJson.builder()
         .build();

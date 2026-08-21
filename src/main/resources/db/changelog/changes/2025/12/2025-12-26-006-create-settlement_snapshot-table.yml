@@ -35,7 +35,7 @@ databaseChangeLog:
         - addPrimaryKey:
             schemaName: game
             tableName: settlement_snapshot
-            columnNames: snapshot_id, zone_id, settlement_id
+            columnNames: snapshot_id, settlement_id
             constraintName: pk_settlement_snapshot
 
   - changeSet:

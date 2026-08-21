@@ -1,6 +1,5 @@
 package org.grimjo.macrocore.infrastructure.persistence.service;
 
-import jakarta.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Optional;
@@ -8,10 +7,12 @@ import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.grimjo.macrocore.game.domain.global.WorldState;
+import org.springframework.transaction.annotation.Transactional;
 import org.grimjo.macrocore.infrastructure.persistence.entity.snapshot.WorldSnapshotEntity;
 import org.grimjo.macrocore.infrastructure.persistence.mapper.snapshot.WorldSnapshotMapper;
 import org.grimjo.macrocore.infrastructure.persistence.repository.snapshot.NpcSnapshotRepository;
 import org.grimjo.macrocore.infrastructure.persistence.repository.snapshot.OrderSnapshotRepository;
+import org.grimjo.macrocore.infrastructure.persistence.repository.snapshot.PlayerSnapshotRepository;
 import org.grimjo.macrocore.infrastructure.persistence.repository.snapshot.RoomSnapshotRepository;
 import org.grimjo.macrocore.infrastructure.persistence.repository.snapshot.SettlementSnapshotRepository;
 import org.grimjo.macrocore.infrastructure.persistence.repository.snapshot.WorldSnapshotRepository;
@@ -25,6 +26,7 @@ public class SnapshotPersistenceService {
   private final ZoneSnapshotRepository zoneRepo;
   private final RoomSnapshotRepository roomRepo;
   private final NpcSnapshotRepository npcRepo;
+  private final PlayerSnapshotRepository playerRepo;
   private final SettlementSnapshotRepository settlementRepo;
   private final OrderSnapshotRepository orderRepo;
 
@@ -38,6 +40,7 @@ public class SnapshotPersistenceService {
     WorldSnapshotEntity header = new WorldSnapshotEntity();
     header.setTick(tick);
     header.setSavedAt(Timestamp.from(Instant.now()));
+    header.setGlobalState(worldSnapshotMapper.extractGlobalState(worldState));
 
     header = worldRepo.save(header);
     Long snapshotId = header.getId();
@@ -45,11 +48,12 @@ public class SnapshotPersistenceService {
     // 2. Сохраняем компоненты (Batch Inserts)
     // Маппер превращает Domain Objects -> List<Entity>
 
-    zoneRepo.saveAll(worldStateMapper.toZoneEntities(worldState, snapshotId));
-    roomRepo.saveAll(worldStateMapper.toRoomEntities(worldState, snapshotId));
-    npcRepo.saveAll(worldStateMapper.toNpcEntities(worldState, snapshotId));
-    settlementRepo.saveAll(worldStateMapper.toSettlementEntities(worldState, snapshotId));
-    orderRepo.saveAll(worldStateMapper.toOrderEntities(worldState, snapshotId));
+    zoneRepo.saveAll(worldSnapshotMapper.toZoneEntities(worldState, snapshotId));
+    roomRepo.saveAll(worldSnapshotMapper.toRoomEntities(worldState, snapshotId));
+    npcRepo.saveAll(worldSnapshotMapper.toNpcEntities(worldState, snapshotId));
+    playerRepo.saveAll(worldSnapshotMapper.toPlayerEntities(worldState, snapshotId));
+    settlementRepo.saveAll(worldSnapshotMapper.toSettlementEntities(worldState, snapshotId));
+    orderRepo.saveAll(worldSnapshotMapper.toOrderEntities(worldState, snapshotId));
 
     log.info("Snapshot #{} (tick {}) saved successfully.", snapshotId, tick);
   }
@@ -76,15 +80,17 @@ public class SnapshotPersistenceService {
     var zones = zoneRepo.findAllBySnapshotId(snapshotId);
     var rooms = roomRepo.findAllBySnapshotId(snapshotId);
     var npcs = npcRepo.findAllBySnapshotId(snapshotId);
+    var players = playerRepo.findAllBySnapshotId(snapshotId);
     var settlements = settlementRepo.findAllBySnapshotId(snapshotId);
     var orders = orderRepo.findAllBySnapshotId(snapshotId);
 
     // 3. Собираем WorldState через маппер
-    WorldState state = worldStateMapper.assembleWorldState(
+    WorldState state = worldSnapshotMapper.assembleWorldState(
         header,
         zones,
         rooms,
         npcs,
+        players,
         settlements,
         orders
     );

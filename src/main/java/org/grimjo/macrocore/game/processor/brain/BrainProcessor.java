@@ -54,7 +54,7 @@ public class BrainProcessor {
       }
     }
 
-    boolean atMeetingPoint = "village_square".equals(npc.getRoomId().getValue());
+    boolean atMeetingPoint = Long.valueOf(1L).equals(npc.getRoomId().getValue());
 
     if (!atMeetingPoint) {
       List<Action> goToSquare = taskPlanner.planMoveToSquare(npc);

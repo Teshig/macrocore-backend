@@ -1,6 +1,6 @@
 [
   {
-    "id": "villager_basic",
+    "id": 1,
     "name": "Поселенец",
     "baseStats": {
       "health": 100,

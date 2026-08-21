@@ -1,0 +1,9 @@
+[
+  {
+    "id": 1,
+    "zoneId": 1,
+    "roomId": 1,
+    "name": "PlayerName",
+    "description": "Test Player"
+  }
+]

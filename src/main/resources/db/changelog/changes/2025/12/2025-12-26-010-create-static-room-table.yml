@@ -16,7 +16,6 @@ databaseChangeLog:
                   name: room_id
                   type: BIGINT
                   constraints:
-                    primaryKey: true
                     nullable: false
               - column:
                   name: name

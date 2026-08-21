@@ -4,7 +4,10 @@
     "name": "Главная площадь",
     "description": "Центр поселения.",
     "exits": {
-      "NORTH": "forest_edge"
+      "NORTH": {
+        "zoneId": 1,
+        "roomId": 2
+      }
     }
   },
   {

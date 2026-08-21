@@ -10,5 +10,5 @@ public class RoomSourceJson {
   private String name;
   private String description;
 
-  private Map<String, ExitTargetJson> exits;
+  private Map<org.grimjo.macrocore.game.domain.world.Direction, ExitTargetJson> exits;
 }

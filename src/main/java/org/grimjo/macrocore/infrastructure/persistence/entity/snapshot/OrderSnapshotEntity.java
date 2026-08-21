@@ -26,12 +26,12 @@ public class OrderSnapshotEntity {
   public static final String TABLE_NAME = "order_snapshot";
 
   @Id private Long snapshotId;
-  @Id private String settlementId;
+  @Id private Long settlementId;
 
   @Id
   private String orderId;
 
-  private String zoneId;
+  private Long zoneId;
 
   @JdbcTypeCode(SqlTypes.JSON)
   private OrderStateJson state;
@@ -41,7 +41,7 @@ public class OrderSnapshotEntity {
   @AllArgsConstructor
   public static class OrderSnapshotId implements Serializable {
     private Long snapshotId;
-    private String settlementId;
+    private Long settlementId;
     private String orderId;
   }
 }

@@ -49,7 +49,7 @@ databaseChangeLog:
         - addPrimaryKey:
             schemaName: game
             tableName: npc_snapshot
-            columnNames: snapshot_id, zone_id, npc_id
+            columnNames: snapshot_id, npc_id
             constraintName: pk_npc_snapshot
 
   - changeSet:

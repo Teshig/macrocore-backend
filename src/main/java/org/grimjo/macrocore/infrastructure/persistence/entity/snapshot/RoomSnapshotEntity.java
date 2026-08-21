@@ -26,9 +26,8 @@ public class RoomSnapshotEntity {
   public static final String TABLE_NAME = "room_snapshot";
 
   @Id private Long snapshotId;
-  @Id private String roomId;
-
-  private String zoneId;
+  @Id private Long roomId;
+  private Long zoneId;
 
   @JdbcTypeCode(SqlTypes.JSON)
   private RoomStateJson state;
@@ -38,6 +37,6 @@ public class RoomSnapshotEntity {
   @AllArgsConstructor
   public static class RoomSnapshotId implements Serializable {
     private Long snapshotId;
-    private String roomId;
+    private Long roomId;
   }
 }

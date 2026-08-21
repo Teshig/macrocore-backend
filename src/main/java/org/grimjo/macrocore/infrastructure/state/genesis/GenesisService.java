@@ -6,6 +6,8 @@ import java.util.Map;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.grimjo.macrocore.game.domain.actor.Player;
+import org.grimjo.macrocore.game.domain.actor.Player.PlayerId;
 import org.grimjo.macrocore.game.domain.actor.NpcBase;
 import org.grimjo.macrocore.game.domain.actor.NpcBase.NpcId;
 import org.grimjo.macrocore.game.domain.global.WorldState;
@@ -17,6 +19,7 @@ import org.grimjo.macrocore.game.domain.world.Zone;
 import org.grimjo.macrocore.infrastructure.persistence.entity.statics.ZoneEntity;
 import org.grimjo.macrocore.infrastructure.persistence.mapper.statics.StaticDomainMapper;
 import org.grimjo.macrocore.infrastructure.persistence.repository.statics.NpcRepository;
+import org.grimjo.macrocore.infrastructure.persistence.repository.statics.PlayerRepository;
 import org.grimjo.macrocore.infrastructure.persistence.repository.statics.RoomRepository;
 import org.grimjo.macrocore.infrastructure.persistence.repository.statics.SettlementRepository;
 import org.grimjo.macrocore.infrastructure.persistence.repository.statics.ZoneRepository;
@@ -29,6 +32,7 @@ public class GenesisService {
   private final ZoneRepository zoneRepository;
   private final RoomRepository roomRepository;
   private final NpcRepository npcRepository;
+  private final PlayerRepository playerRepository;
   private final SettlementRepository settlementRepository;
 
   private final StaticDomainMapper domainMapper;
@@ -40,6 +44,7 @@ public class GenesisService {
     Map<Long, Zone> worldZones = new HashMap<>();
     Map<RoomId, Room> worldRooms = new HashMap<>();
     Map<NpcId, NpcBase> worldPopulation = new HashMap<>();
+    Map<PlayerId, Player> worldPlayers = new HashMap<>();
     Map<SettlementId, SmallSettlement> worldSettlements = new HashMap<>();
 
     List<ZoneEntity> allZones = zoneRepository.findAll();
@@ -54,14 +59,20 @@ public class GenesisService {
           worldSettlements
       );
     }
+    
+    playerRepository.findAll().forEach(entity -> {
+      Player player = domainMapper.toDomain(entity);
+      worldPlayers.put(player.getId(), player);
+    });
 
-    log.info("Genesis: Initialization Complete. Rooms: {}, NPCs: {}, Settlements: {}",
-        worldRooms.size(), worldPopulation.size(), worldSettlements.size());
+    log.info("Genesis: Initialization Complete. Rooms: {}, NPCs: {}, Players: {}, Settlements: {}",
+        worldRooms.size(), worldPopulation.size(), worldPlayers.size(), worldSettlements.size());
 
     return WorldState.builder()
         .tick(0L)
         .rooms(worldRooms)
         .population(worldPopulation)
+        .players(worldPlayers)
         .settlements(worldSettlements)
         .build();
   }

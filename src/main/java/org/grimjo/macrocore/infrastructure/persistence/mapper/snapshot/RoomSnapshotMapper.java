@@ -2,6 +2,8 @@ package org.grimjo.macrocore.infrastructure.persistence.mapper.snapshot;
 
 import org.grimjo.macrocore.game.domain.world.Room;
 import org.grimjo.macrocore.infrastructure.persistence.entity.snapshot.RoomSnapshotEntity;
+import org.grimjo.macrocore.game.domain.world.Zone;
+
 import org.grimjo.macrocore.infrastructure.persistence.json.RoomStateJson;
 
 public class RoomSnapshotMapper {
@@ -17,7 +19,7 @@ public class RoomSnapshotMapper {
   public Room toDomain(RoomSnapshotEntity entity) {
     return Room.builder()
         .id(Room.RoomId.of(entity.getRoomId()))
-        .zoneId(entity.getZoneId())
+        .zoneId(Zone.ZoneId.of(entity.getZoneId()))
         .build();
   }
 

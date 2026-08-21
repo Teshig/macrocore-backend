@@ -15,15 +15,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.grimjo.macrocore.infrastructure.persistence.entity.statics.ContentVersionEntity;
 import org.grimjo.macrocore.infrastructure.persistence.json.source.GenesisSourceJson;
 import org.grimjo.macrocore.infrastructure.persistence.json.source.NpcSourceJson;
+import org.grimjo.macrocore.infrastructure.persistence.json.source.PlayerSourceJson;
 import org.grimjo.macrocore.infrastructure.persistence.json.source.RoomSourceJson;
 import org.grimjo.macrocore.infrastructure.persistence.json.source.SettlementSourceJson;
 import org.grimjo.macrocore.infrastructure.persistence.json.source.ZoneSourceJson;
 import org.grimjo.macrocore.infrastructure.persistence.mapper.statics.NpcContentMapper;
+import org.grimjo.macrocore.infrastructure.persistence.mapper.statics.PlayerContentMapper;
 import org.grimjo.macrocore.infrastructure.persistence.mapper.statics.RoomContentMapper;
 import org.grimjo.macrocore.infrastructure.persistence.mapper.statics.SettlementContentMapper;
 import org.grimjo.macrocore.infrastructure.persistence.mapper.statics.ZoneContentMapper;
 import org.grimjo.macrocore.infrastructure.persistence.repository.statics.ContentVersionRepository;
 import org.grimjo.macrocore.infrastructure.persistence.repository.statics.NpcRepository;
+import org.grimjo.macrocore.infrastructure.persistence.repository.statics.PlayerRepository;
 import org.grimjo.macrocore.infrastructure.persistence.repository.statics.RoomRepository;
 import org.grimjo.macrocore.infrastructure.persistence.repository.statics.SettlementRepository;
 import org.grimjo.macrocore.infrastructure.persistence.repository.statics.ZoneRepository;
@@ -38,20 +41,23 @@ public class StaticPersistenceService {
   private static final String PATH_ZONE = PATH_RESOURCE_ROOT + "zone/";
 
   private static final String FILE_GENESIS = "genesis.json";
+  private static final String FILE_PLAYERS = "players.json";
   private static final String FILE_ZONE = "zone.json";
-  private static final String FILE_ROOMS = "rooms.json";
-  private static final String FILE_NPCS = "npcs.json";
-  private static final String FILE_SETTLEMENTS = "settlements.json";
+  private static final String FILE_ROOMS = "room.json";
+  private static final String FILE_NPCS = "npc.json";
+  private static final String FILE_SETTLEMENTS = "settlement.json";
 
   private final ContentVersionRepository versionRepository;
   private final ZoneRepository zoneRepository;
   private final RoomRepository roomRepository;
   private final NpcRepository npcRepository;
+  private final PlayerRepository playerRepository;
   private final SettlementRepository settlementRepository;
 
   private final ZoneContentMapper zoneMapper;
   private final RoomContentMapper roomMapper;
   private final NpcContentMapper npcMapper;
+  private final PlayerContentMapper playerMapper;
   private final SettlementContentMapper settlementMapper;
 
   private final ObjectMapper objectMapper;
@@ -68,6 +74,12 @@ public class StaticPersistenceService {
       for (String zoneFileName : manifest.getActiveZones()) {
         processZone(zoneFileName);
       }
+      
+      loadAndProcessList(
+          PATH_RESOURCE_ROOT + FILE_PLAYERS,
+          PlayerSourceJson.class,
+          playerSource -> playerRepository.save(playerMapper.toEntity(playerSource))
+      );
 
     } catch (Exception e) {
       log.error("Critical error during content loading!", e);

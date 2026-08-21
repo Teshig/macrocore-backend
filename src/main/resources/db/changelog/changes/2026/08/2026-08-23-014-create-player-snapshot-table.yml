@@ -1,0 +1,82 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2026-08-23-014-1
+      author: junie
+      changes:
+        - createTable:
+            schemaName: game
+            tableName: player_snapshot
+            columns:
+              - column:
+                  name: snapshot_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: player_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: zone_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: room_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_dead
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: state
+                  type: JSONB
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 2026-08-23-014-2
+      author: junie
+      changes:
+        - addPrimaryKey:
+            schemaName: game
+            tableName: player_snapshot
+            columnNames: snapshot_id, player_id
+            constraintName: pk_player_snapshot
+
+  - changeSet:
+      id: 2026-08-23-014-3
+      author: junie
+      changes:
+        - createIndex:
+            schemaName: game
+            tableName: player_snapshot
+            indexName: idx_player_snapshot_zone
+            columns:
+              - column: { name: snapshot_id }
+              - column: { name: zone_id }
+
+  - changeSet:
+      id: 2026-08-23-014-4
+      author: junie
+      changes:
+        - createIndex:
+            schemaName: game
+            tableName: player_snapshot
+            indexName: idx_player_snapshot_room
+            columns:
+              - column: { name: snapshot_id }
+              - column: { name: room_id }
+
+  - changeSet:
+      id: 2026-08-23-014-5
+      author: junie
+      changes:
+        - sql:
+            dbms: postgresql
+            sql: CREATE INDEX idx_player_snapshot_state_gin ON game.player_snapshot USING gin (state);

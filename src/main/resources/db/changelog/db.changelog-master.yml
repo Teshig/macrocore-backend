@@ -15,3 +15,15 @@ databaseChangeLog:
       file: db/changelog/changes/2025/12/2025-12-26-007-create-order_snapshot-table.yml
   - include:
       file: db/changelog/changes/2025/12/2025-12-26-008-content_versions.yml
+  - include:
+      file: db/changelog/changes/2025/12/2025-12-26-009-create-static-zone-table.yml
+  - include:
+      file: db/changelog/changes/2025/12/2025-12-26-010-create-static-room-table.yml
+  - include:
+      file: db/changelog/changes/2025/12/2025-12-26-011-create-static-npc-table.yml
+  - include:
+      file: db/changelog/changes/2025/12/2025-12-26-012-create-static-settlement-table.yml
+  - include:
+      file: db/changelog/changes/2026/08/2026-08-23-013-create-player-table.yml
+  - include:
+      file: db/changelog/changes/2026/08/2026-08-23-014-create-player-snapshot-table.yml

@@ -67,7 +67,7 @@ public class TaskExecutionProcessor {
     switch (action.getType()) {
       case MOVE -> {
         if (action.getTargetId() != null) {
-          npc.roomId(RoomId.of(action.getTargetId()));
+          npc.roomId(RoomId.of(Long.valueOf(action.getTargetId())));
         }
       }
       case WAIT -> {

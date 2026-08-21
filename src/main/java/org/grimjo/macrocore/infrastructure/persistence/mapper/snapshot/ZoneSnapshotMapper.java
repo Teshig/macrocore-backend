@@ -16,7 +16,7 @@ public class ZoneSnapshotMapper {
 
   private ZoneSourceJson toJsonState(Zone domain) {
     return ZoneSourceJson.builder()
-        .level(domain.getLevel())
+        .description(domain.getDescription())
         .build();
   }
 }

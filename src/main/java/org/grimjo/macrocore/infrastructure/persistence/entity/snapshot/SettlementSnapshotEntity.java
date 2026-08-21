@@ -26,9 +26,8 @@ public class SettlementSnapshotEntity {
   public static final String TABLE_NAME = "settlement_snapshot";
 
   @Id private Long snapshotId;
-  @Id private String settlementId;
-
-  private String zoneId;
+  @Id private Long settlementId;
+  private Long zoneId;
 
   @JdbcTypeCode(SqlTypes.JSON)
   private SettlementStateJson state;
@@ -38,6 +37,6 @@ public class SettlementSnapshotEntity {
   @AllArgsConstructor
   public static class SettlementSnapshotId implements Serializable {
     private Long snapshotId;
-    private String settlementId;
+    private Long settlementId;
   }
 }

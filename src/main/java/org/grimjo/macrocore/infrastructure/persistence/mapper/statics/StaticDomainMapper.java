@@ -1,5 +1,7 @@
 package org.grimjo.macrocore.infrastructure.persistence.mapper.statics;
 
+import org.grimjo.macrocore.game.domain.actor.Player;
+import org.grimjo.macrocore.infrastructure.persistence.entity.statics.PlayerEntity;
 import lombok.RequiredArgsConstructor;
 import org.grimjo.macrocore.game.domain.actor.NpcBase;
 import org.grimjo.macrocore.game.domain.settlement.SmallSettlement;
@@ -16,9 +18,11 @@ public class StaticDomainMapper {
   private final RoomStaticMapper roomMapper;
   private final NpcStaticMapper npcMapper;
   private final SettlementStaticMapper settlementMapper;
+  private final PlayerStaticMapper playerMapper;
 
   public Zone toDomain(ZoneEntity entity) { return zoneMapper.toDomain(entity); }
   public Room toDomain(RoomEntity entity) { return roomMapper.toDomain(entity); }
   public NpcBase toDomain(NpcEntity entity) { return npcMapper.toDomain(entity); }
   public SmallSettlement toDomain(SettlementEntity entity) { return settlementMapper.toDomain(entity); }
+  public Player toDomain(PlayerEntity entity) { return playerMapper.toDomain(entity); }
 }

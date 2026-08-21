@@ -6,7 +6,7 @@ import org.grimjo.macrocore.infrastructure.persistence.json.OrderStateJson;
 
 public class OrderSnapshotMapper {
 
-  public OrderSnapshotEntity toEntity(SimpleOrder domain, String settlementId, Long snapshotId) {
+  public OrderSnapshotEntity toEntity(SimpleOrder domain, Long settlementId, Long snapshotId) {
     return OrderSnapshotEntity.builder()
         .snapshotId(snapshotId)
         .settlementId(settlementId)

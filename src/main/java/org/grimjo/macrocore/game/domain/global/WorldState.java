@@ -7,6 +7,8 @@ import java.util.SortedMap;
 import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.Value;
+import org.grimjo.macrocore.game.domain.actor.Player;
+import org.grimjo.macrocore.game.domain.actor.Player.PlayerId;
 import org.grimjo.macrocore.game.domain.actor.NpcBase;
 import org.grimjo.macrocore.game.domain.actor.NpcBase.NpcId;
 import org.grimjo.macrocore.game.domain.object.Corpse;
@@ -22,6 +24,7 @@ public class WorldState {
 
   Map<RoomId, Room> rooms;
   Map<NpcId, NpcBase> population;
+  @Default Map<PlayerId, Player> players = Map.of();
   Map<SettlementId, SmallSettlement> settlements;
   @Default Map<RoomId, List<Corpse>> corpses = Map.of();
   @Default SortedMap<Long, List<String>> purgeSchedule = Collections.emptySortedMap();

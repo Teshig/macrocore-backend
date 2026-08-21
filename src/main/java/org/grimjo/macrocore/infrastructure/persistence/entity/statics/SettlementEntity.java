@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @IdClass(SettlementEntity.SettlementStaticId.class)
-@Table(name = ContentVersionEntity.TABLE_NAME, schema = GAME_SCHEMA)
+@Table(name = SettlementEntity.TABLE_NAME, schema = GAME_SCHEMA)
 public class SettlementEntity {
   public static final String TABLE_NAME = "settlement";
 

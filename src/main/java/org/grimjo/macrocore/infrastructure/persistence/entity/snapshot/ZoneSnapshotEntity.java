@@ -26,7 +26,7 @@ public class ZoneSnapshotEntity {
   public static final String TABLE_NAME = "zone_snapshot";
 
   @Id private Long snapshotId;
-  @Id private String zoneId;
+  @Id private Long zoneId;
 
   @JdbcTypeCode(SqlTypes.JSON)
   private ZoneSourceJson state;
@@ -36,6 +36,6 @@ public class ZoneSnapshotEntity {
   @AllArgsConstructor
   public static class ZoneSnapshotId implements Serializable {
     private Long snapshotId;
-    private String zoneId;
+    private Long zoneId;
   }
 }

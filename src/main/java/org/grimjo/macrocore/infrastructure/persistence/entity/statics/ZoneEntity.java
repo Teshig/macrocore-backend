@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = ZoneEntity.TABLE_NAME, schema = GAME_SCHEMA)
 public class ZoneEntity {
-  public static final String TABLE_NAME = "room";
+  public static final String TABLE_NAME = "zone";
 
   @Id
   private Long id;

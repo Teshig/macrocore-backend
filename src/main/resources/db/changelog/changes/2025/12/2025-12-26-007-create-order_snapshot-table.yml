@@ -24,7 +24,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: order_id
-                  type: BIGINT
+                  type: VARCHAR(255)
                   constraints:
                     nullable: false
               - column:
@@ -40,7 +40,7 @@ databaseChangeLog:
         - addPrimaryKey:
             schemaName: game
             tableName: order_snapshot
-            columnNames: snapshot_id, zone_id, settlement_id, order_id
+            columnNames: snapshot_id, settlement_id, order_id
             constraintName: pk_order_snapshot
 
   - changeSet:

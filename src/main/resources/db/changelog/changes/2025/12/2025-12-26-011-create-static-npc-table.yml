@@ -25,9 +25,13 @@ databaseChangeLog:
               - column:
                   name: description
                   type: TEXT
+              - column:
+                  name: base_stats
+                  type: JSONB
+                  defaultValue: '{}'
 
   - changeSet:
-      id: 2025-12-26-010-2
+      id: 2025-12-26-011-2
       author: grimjo
       changes:
         - addPrimaryKey:

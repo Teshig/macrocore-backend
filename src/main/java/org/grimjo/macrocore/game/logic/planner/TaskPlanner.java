@@ -11,8 +11,8 @@ import org.grimjo.macrocore.game.domain.order.SimpleOrder;
 @Builder
 @RequiredArgsConstructor
 public class TaskPlanner {
-  private static final String TOWN_SQUARE_ID = "village_square";
-  private static final String FOREST_ID = "forest_edge";
+  private static final Long TOWN_SQUARE_ID = 1L;
+  private static final Long FOREST_ID = 2L;
 
   public List<Action> planMoveToSquare(NpcBase npc) {
     if (TOWN_SQUARE_ID.equals(npc.getRoomId().getValue())) {
@@ -21,7 +21,7 @@ public class TaskPlanner {
 
     return List.of(Action.builder()
         .type(ActionType.MOVE)
-        .targetId(TOWN_SQUARE_ID)
+        .targetId(String.valueOf(TOWN_SQUARE_ID))
         .duration(10) // Идти 10 тиков
         .build());
   }
@@ -36,9 +36,9 @@ public class TaskPlanner {
 
   private List<Action> planForage(NpcBase npc) {
     return List.of(
-        Action.builder().type(ActionType.MOVE).targetId("forest_edge").duration(3).build(),
+        Action.builder().type(ActionType.MOVE).targetId(String.valueOf(FOREST_ID)).duration(3).build(),
         Action.builder().type(ActionType.WAIT).duration(5).build(), // Сбор
-        Action.builder().type(ActionType.MOVE).targetId("village_square").duration(3).build(),
+        Action.builder().type(ActionType.MOVE).targetId(String.valueOf(TOWN_SQUARE_ID)).duration(3).build(),
 
         Action.builder()
             .type(ActionType.COMPLETE_ORDER)

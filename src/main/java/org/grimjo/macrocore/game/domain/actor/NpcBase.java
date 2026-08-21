@@ -7,6 +7,8 @@ import org.grimjo.macrocore.game.domain.action.Action;
 import org.grimjo.macrocore.game.domain.world.Room.RoomId;
 import org.grimjo.macrocore.game.domain.world.Zone.ZoneId;
 
+import org.grimjo.macrocore.game.domain.settlement.SmallSettlement.SettlementId;
+
 @Value
 @Builder(toBuilder = true)
 public class NpcBase {
@@ -25,7 +27,7 @@ public class NpcBase {
 
   @Builder.Default List<Action> actionQueue = List.of();
 
-  String settlementId;
+  SettlementId settlementId;
   String currentOrderId;
 
   public int getConsumption() {

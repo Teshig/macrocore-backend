@@ -25,6 +25,8 @@ import org.grimjo.macrocore.game.processor.survival.SurvivalProcessorResult;
 import org.grimjo.macrocore.game.processor.task.TaskExecutionProcessor;
 import org.grimjo.macrocore.game.processor.task.TaskExecutionResult;
 
+import org.grimjo.macrocore.infrastructure.state.partition.PartitionedStateRegistry;
+
 @Slf4j
 @Builder
 @RequiredArgsConstructor
@@ -34,20 +36,46 @@ public class GameEngine {
   private final DecayProcessor decayProcessor;
   private final BrainProcessor brainProcessor;
   private final TaskExecutionProcessor taskProcessor;
+  private final PartitionedStateRegistry partitionedRegistry;
 
   public WorldState processTick(WorldState currentWorld) {
     long nextTick = currentWorld.getTick() + 1;
 
-    SurvivalProcessorResult survivalResult = survivalProcessor.processAll(currentWorld.getPopulation().values());
-    Map<NpcId, NpcBase> currentPopulation = new HashMap<>(survivalResult.getAlive());
+    // 1. Берем иммутабельные копии из реестра вместо WorldState
+    Map<NpcId, NpcBase> currentPopulation = partitionedRegistry.getAllNpcs().stream()
+        .collect(Collectors.toMap(NpcBase::getId, Function.identity()));
 
-    BrainProcessorContext brainContext = BrainProcessorContext.from(currentWorld, currentPopulation);
+    SurvivalProcessorResult survivalResult = survivalProcessor.processAll(currentPopulation.values());
+    
+    // Обновляем мертвых в реестре
+    survivalResult.getDead().values().forEach(deadNpc -> 
+        partitionedRegistry.updateNpc(deadNpc.getId(), old -> deadNpc)
+    );
+
+    // Только живые продолжают думать
+    Map<NpcId, NpcBase> alivePopulation = new HashMap<>(survivalResult.getAlive());
+
+    BrainProcessorContext brainContext = BrainProcessorContext.builder()
+        .population(alivePopulation)
+        .rooms(partitionedRegistry.getAllRooms().stream().collect(Collectors.toMap(org.grimjo.macrocore.game.domain.world.Room::getId, Function.identity())))
+        .settlements(partitionedRegistry.getAllSettlements().stream().collect(Collectors.toMap(SmallSettlement::getId, Function.identity())))
+        .build();
+
     BrainProcessorResult brainResult = brainProcessor.process(brainContext);
 
-    currentPopulation.putAll(brainResult.getUpdatedNpcs());
-    TaskExecutionResult taskResult = taskProcessor.process(currentPopulation);
+    // Обновляем результаты раздумий в реестре
+    brainResult.getUpdatedNpcs().values().forEach(updatedNpc -> {
+        partitionedRegistry.updateNpc(updatedNpc.getId(), old -> updatedNpc);
+        alivePopulation.put(updatedNpc.getId(), updatedNpc);
+    });
 
-    currentPopulation.putAll(taskResult.getUpdatedNpcs());
+    TaskExecutionResult taskResult = taskProcessor.process(alivePopulation);
+
+    // Обновляем результаты задач в реестре
+    taskResult.getUpdatedNpcs().values().forEach(updatedNpc -> {
+        partitionedRegistry.updateNpc(updatedNpc.getId(), old -> updatedNpc);
+    });
+    
     List<SettlementTransaction> transactions = taskResult.getTransactions();
 
     DecayProcessorContext decayContext = DecayProcessorContext.builder()
@@ -58,20 +86,16 @@ public class GameEngine {
         .build();
     DecayProcessorResult decayResult = decayProcessor.process(decayContext);
 
-    Map<String, SmallSettlement> nextSettlements = currentWorld.getSettlements().values()
-        .parallelStream()
-        .map(settlement -> {
-          return settlementProcessor.process(settlement, transactions);
-        })
-        .collect(Collectors.toMap(
-            SmallSettlement::getId,
-            Function.identity()
-        ));
+    // Обновляем поселения
+    partitionedRegistry.getAllSettlements().parallelStream().forEach(settlement -> {
+        partitionedRegistry.updateSettlement(settlement.getId(), old -> 
+            settlementProcessor.process(old, transactions)
+        );
+    });
 
+    // Возвращаем обновленный "глобальный" стейт для сохранения тика
     return currentWorld.toBuilder()
         .tick(nextTick)
-        .settlements(nextSettlements)
-        .population(currentPopulation)
         .corpses(decayResult.getCorpses())
         .purgeSchedule(decayResult.getPurgeSchedule())
         .build();

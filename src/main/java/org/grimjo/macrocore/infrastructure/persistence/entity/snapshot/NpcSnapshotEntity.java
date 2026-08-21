@@ -27,11 +27,10 @@ public class NpcSnapshotEntity {
   public static final String TABLE_NAME = "npc_snapshot";
 
   @Id private Long snapshotId;
-  @Id private String npcId;
-
-  private String zoneId;
-  private String roomId;
-  private String settlementId;
+  @Id private Long npcId;
+  private Long zoneId;
+  private Long roomId;
+  private Long settlementId;
   private boolean isDead;
 
   @JdbcTypeCode(SqlTypes.JSON)
@@ -42,6 +41,6 @@ public class NpcSnapshotEntity {
   @AllArgsConstructor
   public static class NpcSnapshotEntityId implements Serializable {
     private Long snapshotId;
-    private String npcId;
+    private Long npcId;
   }
 }
